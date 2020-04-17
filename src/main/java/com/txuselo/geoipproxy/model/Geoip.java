@@ -20,6 +20,7 @@ public class Geoip {
     private String zipcode;
     private String latitude;
     private String longitude;
+    private String [] location;
     private Boolean is_eu;
     private String calling_code;
     private String country_tld;
