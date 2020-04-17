@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.txuselo</groupId>
 	<artifactId>geoip-proxy</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 
 	<name>geoip-proxy</name>
 	<description>Proxy for caching geoip service</description>
