@@ -51,6 +51,9 @@ public class GeoipService {
             logger.info("Request for... {}", finalUrl);
             ResponseEntity<Geoip> response = restTemplate.exchange(finalUrl, HttpMethod.GET, request, Geoip.class);
             if (response.getStatusCode().is2xxSuccessful()){
+                Geoip geoip = response.getBody();
+                String[] location = { geoip.getLongitude(), geoip.getLatitude() };
+                geoip.setLocation(location);
                 logger.debug("Caching result for ip: {} geoip: {}", ip, response.getBody());
                 cacheService.insertGeoip(ip, response.getBody());
                 return response.getBody();
