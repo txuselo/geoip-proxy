@@ -70,7 +70,6 @@ services:
   logstash:
     ...
     depends_on: geoip-proxy
-
 ```
 * Connect via docker link (Legacy option)
 ```
