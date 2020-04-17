@@ -1,0 +1,7 @@
+geoip-service:
+  url: ""
+  api-key: ""
+  cache:
+    evict-time: 3600
+    evict-cron: "0 0 * * * ?"
+  
