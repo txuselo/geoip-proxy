@@ -1,7 +1,7 @@
 geoip-service:
-  url: ""
-  api-key: ""
+  url: ${GEOIP_URL}
+  api-key: ${GEOIP_API_KEY}
   cache:
-    evict-time: 3600
-    evict-cron: "0 0 * * * ?"
+    evict-time: ${GEOIP_CACHE_EVICT_TIME}
+    evict-cron: ${GEOIP_CACHE_EVICT_CRON}
   
