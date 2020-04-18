@@ -18,9 +18,9 @@ public class Geoip {
     private String district;
     private String city;
     private String zipcode;
-    private String latitude;
-    private String longitude;
-    private String [] location;
+    private Double latitude;
+    private Double longitude;
+    private Double [] location;
     private Boolean is_eu;
     private String calling_code;
     private String country_tld;
@@ -32,6 +32,7 @@ public class Geoip {
     private String organization;
     private Currency currency;
     private TimeZone time_zone;
+    private Boolean is_local;
 
     public Geoip(String ip) {
         this.ip = ip;

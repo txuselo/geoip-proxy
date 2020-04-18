@@ -50,7 +50,7 @@ public class CacheService {
     public void evict(){
         Instant now = Instant.now();
         int sizePreEvict = cache.size();
-        logger.info("Starting evict task. Cache size: {} ", cache.size());
+        logger.debug("Starting evict task. Cache size: {} ", cache.size());
         Iterator<Entry<String,Instant>> iterator = evictControl.entrySet().iterator();
         while (iterator.hasNext()){
             Map.Entry<String,Instant> evictEntry = (Map.Entry<String,Instant>)iterator.next();  
