@@ -15,7 +15,7 @@ docker run -d -p 8080:8080 --name geoip-proxy -e GEOIP_API_KEY="yourapikey" txus
 |          Property Name           |         Env var          |                    Description                     |                     Default Value                      |
 |----------------------------------|--------------------------|----------------------------------------------------|--------------------------------------------------------|
 | `geoip-service.url`              | `GEOIP_URL`              | Url preformatted of remote geoip service.          | `"https://api.ipgeolocation.io/ipgeo?apiKey=%s&ip=%s"` |
-| `geoip-service.apy-key`          | `GEOIP_API_KEY`          | Api key used for authenticate remote geoip service | -                                                      |
+| `geoip-service.api-key`          | `GEOIP_API_KEY`          | Api key used for authenticate remote geoip service | -                                                      |
 | `geoip-service.cache.evict-time` | `GEOIP_CACHE_EVICT_TIME` | Evict time in seconds for each row consulted.      | `3600 # Evict after one hour`                          |
 | `geoip-service.cache.evict-cron` | `GEOIP_CACHE_EVICT_CRON` | Cron expression to run evict cache task            | `"0 0 * * * ?" # Once per hour`                        |
 
@@ -42,6 +42,11 @@ geoip-service:
 * You can connect this proxy with logstash filter for retrieve geoip info about your clients
 
 #### Logstash filter
+* For install this filter plugin, you must run this:
+```
+$LS_HOME/bin/logstash-plugin install logstash-filter-rest
+```
+* And apply this filter config
 ```
 filter {
     rest {

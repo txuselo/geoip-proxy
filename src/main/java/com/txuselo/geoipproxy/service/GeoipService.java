@@ -20,6 +20,8 @@ public class GeoipService {
 
     CacheService cacheService;
 
+    IpUtilsService ipUtils;
+
     RestTemplate restTemplate;
     HttpHeaders headers;
     HttpEntity<Geoip> request;
@@ -27,8 +29,9 @@ public class GeoipService {
     String url;
     String apiKey;
 
-    public GeoipService(CacheService cacheService, GeoipConfig config){
+    public GeoipService(CacheService cacheService, IpUtilsService ipUtilsService, GeoipConfig config){
         this.cacheService = cacheService;
+        this.ipUtils = ipUtilsService;
         this.restTemplate = new RestTemplate();
         this.headers = new HttpHeaders();
         this.request = new HttpEntity<Geoip>(headers);
@@ -46,14 +49,19 @@ public class GeoipService {
         Geoip cachedResult = cacheService.searchIp(ip);
         if (cachedResult != null){
             return cachedResult;
+        } if (!ipUtils.isValidPublicIp(ip)){
+            Geoip geoip = new Geoip(ip);
+            geoip.setIs_local(true);
+            return geoip;
         } else{
             String finalUrl = String.format(url, this.apiKey, ip);
             logger.info("Request for... {}", finalUrl);
             ResponseEntity<Geoip> response = restTemplate.exchange(finalUrl, HttpMethod.GET, request, Geoip.class);
             if (response.getStatusCode().is2xxSuccessful()){
                 Geoip geoip = response.getBody();
-                String[] location = { geoip.getLongitude(), geoip.getLatitude() };
+                Double[] location = { geoip.getLongitude(), geoip.getLatitude() };
                 geoip.setLocation(location);
+                geoip.setIs_local(false);
                 logger.debug("Caching result for ip: {} geoip: {}", ip, response.getBody());
                 cacheService.insertGeoip(ip, response.getBody());
                 return response.getBody();
